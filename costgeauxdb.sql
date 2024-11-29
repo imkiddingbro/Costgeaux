@@ -94,6 +94,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart`(
     `i_id` smallint(5) DEFAULT NULL,
+    `t_numOfItems` mediumint(9) DEFAULT NULL,
     `t_price` DECIMAL(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
