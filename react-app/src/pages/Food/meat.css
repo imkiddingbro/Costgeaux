@@ -1,4 +1,4 @@
-.home {
+.meatPage {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -8,59 +8,14 @@
     padding: 20px; /* Add some padding to ensure space between border and content */
 }
 
-.left-column,
-.middle-column,
-.right-column {
+.middle-column {
     flex: 1;
 }
 
-.left-column {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
 .middle-column {
-    max-width: 600px; 
+    max-width: 800px; 
     margin-left: 75px;
-    margin-right: 750px;
+    margin-right: 75px;
     text-align: center; /* Text inside the middle column will be centered */
     /* Additional adjustments can be made here for spacing and alignment */
 }
-
-.right-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-content: right;
-    /* padding-left: 75px; */
-}
-
-.small-button {
-    font-size: 20px; 
-    padding: 14px 14px;
-    width: 300px;
-    margin-right: 20px; 
-    margin-left: 60px;
-    margin-top: 20px;
-}
-
-
-.small-button {
-    display: inline-block;
-    padding: 8px 16px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    border: 2px solid purple; /* Purple border */
-    border-radius: 4px;
-    color: black; /* Change the text color */
-}
-
-.small-button:hover {
-    background-color: purple; /* Change background color on hover */
-    color: white; /* Change text color on hover */
-}
-
-
