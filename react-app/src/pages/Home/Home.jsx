@@ -8,7 +8,7 @@ function Home() {
             <div className="left-column">
                 <div className="button-container">
                      {/* Use Link to navigate to the meat page */}
-                     <Link to="/meat.js" className="small-button">Meat</Link>
+                     <Link to="/meat.jsx" className="small-button">Meat</Link>
                 </div>
             </div>
             <div className="middle-column">
