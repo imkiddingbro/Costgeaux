@@ -2,45 +2,22 @@
 <html>
     <head>
         <title>Costgeaux</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
     </head>
     <body>
         <h1>Welcome to Costgeaux</h1>
         
         <h2> --- Employee Clock in Here ---</h2>
-      
-        <form>
-            <div>
-                <label for="fname">Employee Name:</label>
-                <input type="text" id="fname" name="fname" placeholder="John Doe">
-            </div>
 
+        <form action="process-form.php" method="post">
+            <div>
+                <label for="name">Employee Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+    
             <br>
 
-            <div>
-                <input type="reset">
-                <input type="submit">
-            </div>
-            
-        </form>
-        <br>
-        <h3>Inventory Table</h3>
-        <table bgcolor="black" width="600">
-            <tr bgcolor="grey">
-                <th width="100">Meat</th>
-                <th width="100">Produce</th>
-                <th width="100">Carbs</th>
-                <th width="100">Dairy</th>
-                <th width="100">Snacks</th>
-                <th width="100">Beverages</th>
-            </tr>
-            <tr bgcolor="lightgrey" align="center">
-                <td>sql</td>
-                <td>sql</td>
-                <td>sql</td>
-                <td>sql</td>
-                <td>sql</td>
-                <td>sql</td>
-            </tr>
-        </table>
+            <button>Submit</button>
     </body>
 </html>
