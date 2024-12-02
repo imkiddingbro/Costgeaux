@@ -1,8 +1,7 @@
-import React from 'react';
-import './Home.css';
-import { Link } from 'react-router-dom'; // Assuming you have some CSS in Home.css
+import './meat.css';
+import { Link } from 'react-router-dom';
 
-function Home() {
+function meat() {
     return (
         <div className="home">
             <div className="left-column">
@@ -12,14 +11,11 @@ function Home() {
                 </div>
             </div>
             <div className="middle-column">
-                <h1>Welcome to Costgeaux</h1>
+                <h1>Meat Catalogue</h1>
                 <p>_____________________________________________________________</p>
-                <h2>Take Advantage Of:</h2>
-                <p>Fresh products at cheaper prices</p>
-
             </div>
         </div>
     );
 }
 
-export default Home;
+export default meat;
