@@ -8,7 +8,7 @@ import produce from './pages/produce';
 
 function Home(){
     return (
-        <div className="homePage">
+        <div className="Home">
             <div className="left-column">
                 <div className="button-container">
 
