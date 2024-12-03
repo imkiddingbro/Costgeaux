@@ -1,4 +1,4 @@
-function Header(){
+function Inventory(){
     return(
         <header>
             <h1>Costgeaux Grocery Store Inventory</h1>
@@ -9,4 +9,4 @@ function Header(){
     );
 }
 
-export default Header
+export default Inventory
