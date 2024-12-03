@@ -1,9 +1,13 @@
+import Header from './Header.jsx'
 import Inventory from './Inventory.jsx'
 
 function App() {
 
     return (
-      <Inventory/>
+      <>
+      <Header />
+      <Inventory />
+      </>
   );
 }
 
