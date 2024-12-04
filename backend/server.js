@@ -1,39 +1,44 @@
-const express = require('express');
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
+const express = require("express");
+const mysql = require("mysql");
+const bodyParser = require("body-parser");
 
 const app = express();
-const port = 5000;
+const port = 5173;
 
 // Middleware
 app.use(bodyParser.json());
 
 // MySQL Connection
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'your_username',
-  password: 'your_password',
-  database: 'costgeauxdb'
+  previewLimit: "50",
+  server: "localhost",
+  port: "33060",
+  driver: "MySQL",
+  name: "MySQL Local",
+  database: "costgeauxdb",
+  username: "root",
+  password: "password",
+  connectionTimeout: 30,
 });
 
 db.connect((err) => {
   if (err) {
-    console.error('Database connection failed:', err);
+    console.error("Database connection failed:", err);
   } else {
-    console.log('Connected to MySQL database');
+    console.log("Connected to MySQL database");
   }
 });
 
 // API Route to Insert Inventory
-app.post('/api/inventory', (req, res) => {
+app.post("/api/inventory", (req, res) => {
   const { name, quantity, price } = req.body;
-  const sql = 'INSERT INTO inventory (name, quantity, price) VALUES (?, ?, ?)';
+  const sql = "INSERT INTO inventory (name, quantity, price) VALUES (?, ?, ?)";
   db.query(sql, [name, quantity, price], (err, result) => {
     if (err) {
-      console.error('Error inserting data:', err);
-      res.status(500).send('Database error');
+      console.error("Error inserting data:", err);
+      res.status(500).send("Database error");
     } else {
-      res.send('Inventory added successfully');
+      res.send("Inventory added successfully");
     }
   });
 });
