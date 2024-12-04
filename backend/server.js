@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 
 const app = express();
 const port = 5173;
@@ -22,6 +23,11 @@ db.connect((err) => {
   } else {
     console.log("Connected to MySQL database");
   }
+});
+
+db.query("SELECT * FROM costgeauxdb.product", function (err, result, fields) {
+  if (err) throw err;
+  console.log(result);
 });
 
 // API Route to Insert Inventory
