@@ -1,3 +1,4 @@
+use costgeauxdb;
 DROP PROCEDURE IF EXISTS alter_if_exists;
 DROP PROCEDURE IF EXISTS alter_if_exists2;
 DELIMITER $$ CREATE PROCEDURE alter_if_exists() BEGIN IF EXISTS (
