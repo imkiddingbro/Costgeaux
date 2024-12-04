@@ -10,15 +10,10 @@ app.use(bodyParser.json());
 
 // MySQL Connection
 const db = mysql.createConnection({
-  previewLimit: "50",
-  server: "localhost",
-  port: "33060",
-  driver: "MySQL",
-  name: "MySQL Local",
+  host: "localhost",
   database: "costgeauxdb",
-  username: "root",
+  user: "root",
   password: "password",
-  connectionTimeout: 30,
 });
 
 db.connect((err) => {
