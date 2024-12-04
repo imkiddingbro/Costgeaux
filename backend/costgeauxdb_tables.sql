@@ -4,6 +4,8 @@ DROP TABLE if exists product;
 DROP TABLE IF EXISTS employee;
 DROP TABLE if EXISTS customer;
 DROP TABLE IF EXISTS supplier;
+DROP TABLE if EXISTS cart;
+DROP TABLE IF EXISTS orderstock;
 
 CREATE TABLE Employee(
     e_id int,
@@ -37,6 +39,24 @@ CREATE TABLE Product(
     Price float,
     p_Quantity int,
     primary key (p_id)
+);
+
+CREATE TABLE Cart(
+    cart_id int,
+    customer_id int,
+    item_count int,
+    total_price float,
+    primary key (cart_id),
+    /*foreign key (customer_id) references Customer(c_id)*/
+);
+
+CREATE TABLE OrderStock(
+    order_id int,
+    employee_id int,
+    item_count int,
+    total_price float,
+    primary key (order_id),
+    /*foreign key (employee_id) references Employee(e_id)*/
 );
 
 INSERT INTO product VALUES ('1', 'apple', '2.00', '4');
