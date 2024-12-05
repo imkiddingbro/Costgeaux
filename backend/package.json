@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "express": "^4.21.1",
-    "mysql": "^2.18.1"
+    "init": "^0.1.2",
+    "mysql": "^2.18.1",
+    "prompt-sync": "^4.2.0"
   }
 }

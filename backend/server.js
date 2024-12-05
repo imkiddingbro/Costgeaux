@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
+const prompt = require("prompt-sync")();
 
 const app = express();
 
@@ -23,18 +24,13 @@ db.connect((err) => {
   }
 });
 
-db.query(
-  "INSERT INTO product VALUES('12345', 'peanuts', '0.75', '20');",
-  function (err, result) {
-    if (err) throw err;
-    console.log("Query Updated Successfully\n");
-  }
+console.log(
+  "You are a manager looking to update one of your employees states because they recently moved."
 );
 
-db.query(
-  "SELECT * FROM costgeauxdb.product WHERE p_id LIKE 'apple'",
-  function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-  }
-);
+var question1a = prompt("Input the employees name.\n");
+console.log(question1a);
+var question1b = prompt("Input the employees new city.\n");
+console.log(question1b);
+var question1c = prompt("Input the employees position.\n");
+console.log(question1c);
