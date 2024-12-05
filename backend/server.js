@@ -22,61 +22,76 @@ db.connect((err) => {
   } else {
     console.log("Connected to MySQL database\n");
 
-    console.log(
-      "You are a manager looking to update one of your employees states because they recently moved.\n"
-    );
-
-    let question1a;
-    let question1b;
-    let question1c;
-    let question1d;
+    console.log("Welcome to the grocery store! Let's process your order.");
 
     // Prompt user for input
-    while (!question1a && !question1b && !question1c && !question1d) {
-      question1a = prompt("Input the employees name. \tEX: 'Stacy'\n");
-      if (question1a) {
-        question1b = prompt(
-          "Input the employees new city. \tEX: 'New Orleans'\n"
-        );
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question1b) {
-        question1c = prompt("Input the employees state. \tEX: 'TX'\n");
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question1c) {
-        question1d = prompt("Input the employees position. \tEX: 'cashier'\n");
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question1d) {
-        const updateQuery1 =
-          "UPDATE Employee SET e_City = ?, e_State = ? WHERE e_name = ? AND e_Position = ?";
-        db.query(
-          updateQuery1,
-          [question1b, question1c, question1a, question1d],
-          (err, results) => {
-            if (err) {
-              console.error("Failed to update employee record:", err);
-            } else if (results.affectedRows === 0) {
-              console.log(
-                "No employee found with the given name and position."
-              );
-            } else {
-              console.log("Employee record updated successfully!");
-            }
+    var customerName = prompt("Enter your name: ");
+    var productName = prompt("Enter the product name: ");
+    var quantity = parseInt(prompt("Enter the quantity: "));
 
-            // Close the database connection
-            db.end();
-          }
-        );
+    // Check if product exists and has enough quantity
+    const productCheckQuery = `
+      SELECT p_id, price, p_Quantity
+      FROM Product
+      WHERE p_name = ? AND p_Quantity >= ?;
+    `;
+
+    db.query(productCheckQuery, [productName, quantity], (err, results) => {
+      if (err) {
+        console.error("Error checking product availability:", err);
+      } else if (results.length === 0) {
+        console.log("Not enough product quantity or product does not exist.");
       } else {
-        console.log("Invalid Input");
+        const productId = results[0].p_id;
+        const productPrice = results[0].price;
+
+        // Get customer ID based on their name
+        const customerQuery = "SELECT c_id FROM Customer WHERE c_name = ?";
+        db.query(customerQuery, [customerName], (err, customerResults) => {
+          if (err) {
+            console.error("Error finding customer:", err);
+          } else if (customerResults.length === 0) {
+            console.log("Customer not found.");
+          } else {
+            const customerId = customerResults[0].c_id;
+
+            // Insert the product into the cart
+            const insertCartQuery = `
+              INSERT INTO Cart (customer_id, product_id, item_count, total_price)
+              VALUES (?, ?, ?, ?);
+            `;
+            const totalPrice = quantity * productPrice;
+
+            db.query(
+              insertCartQuery,
+              [customerId, productId, quantity, totalPrice],
+              (err, insertResults) => {
+                if (err) {
+                  console.error("Failed to update cart:", err);
+                } else {
+                  console.log("Product added to cart successfully!");
+
+                  // Update the product quantity in the Product table
+                  const updateProductQuery = `
+                    UPDATE Product
+                    SET p_Quantity = p_Quantity - ?
+                    WHERE p_id = ?;
+                  `;
+
+                  db.query(updateProductQuery, [quantity, productId], (err, updateResults) => {
+                    if (err) {
+                      console.error("Failed to update product quantity:", err);
+                    } else {
+                      console.log("Product quantity updated successfully!");
+                    }
+                    db.end(); // Close the connection after the transaction is complete
+                  });
+                }
+              }
+            );
+          }
+        });
       }
-    }
+    });
   }
-  // Close the database connection
-  db.end();
 });
