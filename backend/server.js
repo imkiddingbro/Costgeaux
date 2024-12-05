@@ -215,15 +215,13 @@ db.connect((err) => {
     }
   }
   
-
-
-
+  // Run the scripts
   async function main() {
     
-    //await updateEmployee();
-    //await addCustomer();
-    //await updateProductStock();
-    //await deleteEmployee();
+    await updateEmployee();
+    await addCustomer();
+    await updateProductStock();
+    await deleteEmployee();
     await updateCart();
     db.end(() => console.log("Database connection closed."));
   }
