@@ -65,7 +65,11 @@ db.connect((err) => {
           err ? reject(err) : resolve(res)
         )
       );
-      console.log("Customer record updated successfully!\n");
+      if (results.affectedRows === 0) {
+        console.log("Failed to update customer record.\n");
+      } else {
+        console.log("Customer record updated successfully!\n");
+      }
     } catch (error) {
       console.error("Failed to update customer record:", error);
     }
@@ -78,10 +82,10 @@ db.connect((err) => {
     const quantity = prompt("Input the product amount (EX: '25'): ");
 
     const query =
-      "UPDATE Product SET p_name = ?, p_Quantity = ? WHERE p_name = ?";
+      "UPDATE Product SET p_Quantity = p_Quantity + ?, WHERE p_name = ?";
     try {
       const results = await new Promise((resolve, reject) =>
-        db.query(query, [productName, quantity, productName], (err, res) =>
+        db.query(query, [quantity, productName], (err, res) =>
           err ? reject(err) : resolve(res)
         )
       );
@@ -95,10 +99,37 @@ db.connect((err) => {
     }
   }
 
+  async function deleteEmployee() {
+    console.log("You are a manager. One of your employees quit. Remove them from the database.");
+
+    const employeeName = prompt("Enter your employees name (EX: 'Stacy'): ");
+    const city = prompt("Enter your city (EX: 'Dallas'): ");
+    const state = prompt("Enter your state (EX: 'TX'): ");
+    const employeePosition = prompt("Enter your employees position (EX: 'janitor'): ");
+
+    const query = "DELETE FROM Employee WHERE e_name = ? AND e_City = ? AND e_State = ? AND e_Position = ?";
+    try {
+      const results = await new Promise((resolve, reject) =>
+        db.query(query, [employeeName, city, state, employeePosition], (err, res) =>
+          err ? reject(err) : resolve(res)
+        )
+      );
+      if (results.affectedRows === 0) {
+        console.log("No employee found with the given name and position.\n");
+      } else {
+        console.log("Employee record updated successfully!\n");
+      }
+    } catch (error) {
+      console.error("Failed to update employee record:", error);
+    }
+  }
+
+
   async function main() {
     await updateEmployee();
     await addCustomer();
     await updateProductStock();
+    await deleteEmployee();
     db.end(() => console.log("Database connection closed."));
   }
 
