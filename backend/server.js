@@ -1,10 +1,8 @@
 const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
-const fs = require("fs");
 
 const app = express();
-const port = 5173;
 
 // Middleware
 app.use(bodyParser.json());
@@ -25,26 +23,18 @@ db.connect((err) => {
   }
 });
 
-db.query("SELECT * FROM costgeauxdb.product", function (err, result, fields) {
-  if (err) throw err;
-  console.log(result);
-});
+db.query(
+  "INSERT INTO product VALUES('12345', 'peanuts', '0.75', '20');",
+  function (err, result) {
+    if (err) throw err;
+    console.log("Query Updated Successfully\n");
+  }
+);
 
-// API Route to Insert Inventory
-app.post("/api/inventory", (req, res) => {
-  const { name, quantity, price } = req.body;
-  const sql = "INSERT INTO inventory (name, quantity, price) VALUES (?, ?, ?)";
-  db.query(sql, [name, quantity, price], (err, result) => {
-    if (err) {
-      console.error("Error inserting data:", err);
-      res.status(500).send("Database error");
-    } else {
-      res.send("Inventory added successfully");
-    }
-  });
-});
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+db.query(
+  "SELECT * FROM costgeauxdb.product WHERE p_id LIKE 'apple'",
+  function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  }
+);
