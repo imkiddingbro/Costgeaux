@@ -23,7 +23,7 @@ db.connect((err) => {
     console.log("Connected to MySQL database\n");
 
     console.log(
-      "You are a manager looking to update one of your employees states because they recently moved."
+      "You are a manager looking to update one of your employees states because they recently moved.\n"
     );
 
     let question1a;
