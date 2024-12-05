@@ -153,7 +153,52 @@ db.connect((err) => {
   }
 
   
+  async function updateCart() {
+    console.log("You are a customer adding products into your cart.");
 
+    const customerName = prompt("Enter your name (EX: 'Stacy'): ");
+    const productName = prompt("Input the product name (EX: 'lamb'): ");
+    const quantity = prompt("Input the product amount (EX: '25'): ");
+    
+    const checkQuery = "SELECT * FROM Product WHERE p_name = ?";
+    const purchaseQuery = "INSERT INTO Cart (customer_id, product_id, item_count, total_price) VALUES (?, ?, ?) SELECT c.c_id, p.p_id, ? AS item_count, ? * p.price AS total_price FROM Customer c, Product p WHERE c.c_name = ? AND p.p_name = ? AND p.p_Quantity = ?";
+    const updateQuery = "UPDATE Product SET p_Quantity = p_Quantity - ? WHERE p_name = ?";
+    try {
+
+      const [rows] = await new Promise((resolve, reject) =>
+        db.query(checkQuery, [productName], (err, res) =>
+          err ? reject(err) : resolve(res)
+        )
+      );
+      
+      if(rows) {
+        const results1 = await new Promise((resolve, reject) =>
+          db.query(updateQuery, [quantity, productName], (err, res) =>
+            err ? reject(err) : resolve(res)
+          )
+        );
+        if (results1.affectedRows === 0) {
+          console.log("No product found with the given name.\n");
+        } 
+        const results2 = await new Promise((resolve, reject) =>
+          db.query(purchaseQuery, [customerName, productName, quantity], (err, res) =>
+            err ? reject(err) : resolve(res)
+          )
+        );
+        if (results2.affectedRows === 0) {
+          console.log("Product could not be added.\n");
+        } else {
+          console.log("Your Cart has been updated with the product(s)!\n");
+        }
+
+      } else {
+        console.log("No inventory avalible for " + productName + ".");
+      }
+        
+    } catch (error) {
+      console.error("Failed to update product stock record:", error);
+    }
+  }
   
 
 
@@ -162,8 +207,9 @@ db.connect((err) => {
     
     //await updateEmployee();
     //await addCustomer();
-    await updateProductStock();
+    //await updateProductStock();
     //await deleteEmployee();
+    await updateCart();
     db.end(() => console.log("Database connection closed."));
   }
 
