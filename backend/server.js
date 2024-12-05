@@ -80,20 +80,44 @@ db.connect((err) => {
 
     const productName = prompt("Input the product name (EX: 'lamb'): ");
     const quantity = prompt("Input the product amount (EX: '25'): ");
+    const price = prompt("Input the product price (EX: 2.00): ");
+    const section = prompt("Input the product section (EX: 'Produce Section'): ");
 
-    const query =
-      "UPDATE Product SET p_Quantity = p_Quantity + ? WHERE p_name = ?";
+    const checkQuery = "SELECT * FROM Product WHERE p_name = ?";
+    const updateQuery = "UPDATE Product SET p_Quantity = p_Quantity + ? WHERE p_name = ?";
+    const addQuery = "INSERT INTO Product (p_name, price, p_Quantity, p_section) VALUES (?, ?, ?, ?)";
     try {
-      const results = await new Promise((resolve, reject) =>
-        db.query(query, [quantity, productName], (err, res) =>
+
+      const [rows] = await new Promise((resolve, reject) =>
+        db.query(checkQuery, [productName], (err, res) =>
           err ? reject(err) : resolve(res)
         )
       );
-      if (results.affectedRows === 0) {
-        console.log("No product found with the given name.\n");
+
+      if(rows && Array.isArray(rows) && rows.length > 0) {
+        const results1 = await new Promise((resolve, reject) =>
+          db.query(updateQuery, [quantity, productName], (err, res) =>
+            err ? reject(err) : resolve(res)
+          )
+        );
+        if (results1.affectedRows === 0) {
+          console.log("No product found with the given name.\n");
+        } else {
+          console.log("Product stock record updated successfully!\n");
+        }
       } else {
-        console.log("Product stock record updated successfully!\n");
+        const results2 = await new Promise((resolve, reject) =>
+          db.query(addQuery, [productName, price, quantity, section], (err, res) =>
+            err ? reject(err) : resolve(res)
+          )
+        );
+        if (results2.affectedRows === 0) {
+          console.log("Product could not be updated.\n");
+        } else {
+          console.log("New product added to inventory!\n");
+        }
       }
+        
     } catch (error) {
       console.error("Failed to update product stock record:", error);
     }
@@ -125,67 +149,17 @@ db.connect((err) => {
   }
 
   
-  async function updateSupplierStock(sup_name, sup_stock) {
-    console.log("You are an employee inputting products into your inventory.");
 
-    const supplierName = sup_name;
-    const quantity = sup_stock;
-
-    const query =
-      "UPDATE Supplier SET s_Stock = s_Stock - ? WHERE s_name = ?";
-    try {
-      const results = await new Promise((resolve, reject) =>
-        db.query(query, [quantity, supplierName], (err, res) =>
-          err ? reject(err) : resolve(res)
-        )
-      );
-      if (results.affectedRows === 0) {
-        console.log("No supplier found with the given name.\n");
-      } else {
-        console.log("Product stock record updated successfully!\n");
-      }
-    } catch (error) {
-      console.error("Failed to update product stock record:", error);
-    }
-  }
-
-
-  async function usingOrderStock() {
-    console.log("You are an employee inputting products into your inventory.");
-
-    const employeeName = prompt("Input the employee's name (EX: 'Stacy'): ");
-    const productName = prompt("Input the product name (EX: 'lamb'): ");
-    const quantity = prompt("Input the product amount (EX: '25'): ");
-    const supplierName = prompt("Input the supplier's name (EX: 'Stacy'): ");
-
-    const query =
-      "UPDATE OrderStock SET item_count = ?";
-    try {
-      const results = await new Promise((resolve, reject) =>
-        db.query(query, [quantity], (err, res) =>
-          err ? reject(err) : resolve(res)
-        )
-      );
-      await updateProductStock();
-      await updateSupplierStock(supplierName, quantity);
-      if (results.affectedRows === 0) {
-        console.log("No product found with the given name.\n");
-      } else {
-        console.log("Product stock record updated successfully!\n");
-      }
-    } catch (error) {
-      console.error("Failed to update product stock record:", error);
-    }
-  }
+  
 
 
 
   async function main() {
-    await usingOrderStock();
-    await updateEmployee();
-    await addCustomer();
+    
+    //await updateEmployee();
+    //await addCustomer();
     await updateProductStock();
-    await deleteEmployee();
+    //await deleteEmployee();
     db.end(() => console.log("Database connection closed."));
   }
 
