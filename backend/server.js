@@ -22,6 +22,8 @@ db.connect((err) => {
   } else {
     console.log("Connected to MySQL database\n");
 
+    // Begin First Prompt
+
     console.log(
       "You are a manager looking to update one of your employees states because they recently moved."
     );
@@ -52,10 +54,7 @@ db.connect((err) => {
       if (question1d) {
         const updateQuery1 =
           "UPDATE Employee SET e_City = ?, e_State = ? WHERE e_name = ? AND e_Position = ?";
-        db.query(
-          updateQuery1,
-          [question1b, question1c, question1a, question1d],
-          (err, results) => {
+        db.query(updateQuery1, [question1b, question1c, question1a, question1d], (err, results) => {
             if (err) {
               console.error("Failed to update employee record:", err);
             } else if (results.affectedRows === 0) {
@@ -73,6 +72,47 @@ db.connect((err) => {
     }
 
     // Second Prompt
+    console.log(
+      "You are a new Customer. Input your information."
+    );
+
+    let question2a;
+    let question2b;
+    let question2c;
+
+    // Prompt user for input
+    while (!question2a && !question2b && !question2c) {
+      question2a = prompt("Enter your name (EX: 'Stacy'): ");
+      if (question2a) {
+        question2b = prompt("Enter your city (EX: 'Dallas'): ");
+      } else {
+        console.log("Invalid Input.");
+      }
+      if (question2b) {
+        question2c = prompt("Enter your state (EX: 'TX'): ");
+      } else {
+        console.log("Invalid Input.");
+      }
+      
+      if (question2c) {
+        const updateQuery2 =
+          "INSERT INTO customer (c_name, c_City, c_State) VALUES (?, ?, ?)";
+        db.query(updateQuery2, [question2a, question2b, question2c], (err, results) => {
+            if (err) {
+              console.error("Failed to update employee record:", err);
+            } else if (results.affectedRows === 0) {
+              console.log(
+                "Could not update Query.\n"
+              );
+            } else {
+              console.log("Customer record updated successfully!\n");
+            }
+          }
+        );
+      } else {
+        console.log("Invalid Input");
+      }
+    }
 
     // Third Prompt
 
