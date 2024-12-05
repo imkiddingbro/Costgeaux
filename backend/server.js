@@ -30,14 +30,15 @@ db.connect((err) => {
 
     const employeeName = prompt("Input the employee's name (EX: 'Stacy'): ");
     const newCity = prompt("Input the employee's new city (EX: 'Dallas'): ");
-    const newState = prompt("Input the employee's state (EX: 'TX'): ");
+    const newState = prompt("Input the employee's potenial new state (EX: 'TX'): ");
     const position = prompt("Input the employee's position (EX: 'employee'): ");
 
-    const query =
+    const updateQuery =
       "UPDATE Employee SET e_City = ?, e_State = ? WHERE e_name = ? AND e_Position = ?";
+    const selectQuery = "SELECT * FROM Employee WHERE e_name = ? AND e_Position = ?";
     try {
       const results = await new Promise((resolve, reject) =>
-        db.query(query, [newCity, newState, employeeName, position], (err, res) =>
+        db.query(updateQuery, [newCity, newState, employeeName, position], (err, res) =>
           err ? reject(err) : resolve(res)
         )
       );
@@ -45,6 +46,17 @@ db.connect((err) => {
         console.log("No employee found with the given name and position.\n");
       } else {
         console.log("Employee record updated successfully!\n");
+        // Fetch the updated employee record
+        const [updatedEmployee] = await new Promise((resolve, reject) =>
+          db.query(selectQuery, [employeeName, position], (err, res) =>
+              err ? reject(err) : resolve(res)
+          )
+      );
+      console.log("Updated employee record:\n");
+      console.log(`Name: ${updatedEmployee.e_name}`);
+      console.log(`Position: ${updatedEmployee.e_Position}`);
+      console.log(`City: ${updatedEmployee.e_City}`);
+      console.log(`State: ${updatedEmployee.e_State}`);
       }
     } catch (error) {
       console.error("Failed to update employee record:", error);
@@ -230,8 +242,8 @@ db.connect((err) => {
   // Run the scripts
   async function main() {
     
-    //await updateEmployee();
-    await addCustomer();
+    await updateEmployee();
+    //await addCustomer();
    // await updateProductStock();
     //await deleteEmployee();
     //await updateCart();
