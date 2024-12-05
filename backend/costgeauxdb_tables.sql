@@ -68,7 +68,7 @@ CREATE TABLE Supplier(
 CREATE TABLE Product(
     p_id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
     p_name varchar(20) NOT NULL,
-    price float NOT NULL CHECK (price > 0),
+    price DECIMAL (5,2) NOT NULL CHECK (price > 0),
     p_Quantity int NOT NULL CHECK (p_Quantity > 0),
     p_section varchar(20) NOT NULL
 );
@@ -78,7 +78,7 @@ CREATE TABLE Cart(
     customer_id int NOT NULL,
 	product_id int NOT NULL,
     item_count int NOT NULL CHECK (item_count > 0),
-    total_price float NOT NULL CHECK (total_price > 0),
+    total_price DECIMAL (5,2) NOT NULL CHECK (total_price > 0),
     foreign key (customer_id) references Customer(c_id),
 	foreign key (product_id) references Product(p_id)
 );
