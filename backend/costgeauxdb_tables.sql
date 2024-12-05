@@ -75,7 +75,6 @@ CREATE TABLE OrderStock(
     foreign key (employee_id) references Employee(e_id)
 );
 
-
 INSERT INTO product VALUES ('1', 'apple', '2.00', '4');
 INSERT INTO product VALUES ('2', 'orange', '1.00', '10');
 INSERT INTO product VALUES ('3', 'banana', '4.00', '20');

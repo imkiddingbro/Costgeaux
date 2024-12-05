@@ -18,7 +18,7 @@ function Header() {
           marginTop: "40px",
           display: "inline-block",
           float: "right",
-          paddingRight: "95px",
+          paddingRight: "100px",
         }}
       >
         Orders

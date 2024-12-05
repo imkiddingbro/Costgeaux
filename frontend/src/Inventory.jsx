@@ -44,7 +44,7 @@ const Inventory = () => {
             required
           />
         </label>
-        <label style={{ paddingLeft: "425px" }}>
+        <label style={{ paddingLeft: "420px" }}>
           Product:
           <input
             type="text"
@@ -64,7 +64,7 @@ const Inventory = () => {
             required
           />
         </label>
-        <label style={{ paddingLeft: "425px" }}>
+        <label style={{ paddingLeft: "420px" }}>
           Quantity:
           <input
             type="number"
@@ -78,7 +78,8 @@ const Inventory = () => {
         type="submit"
         style={{
           display: "flex",
-          marginTop: "20px",
+          marginTop: "10px",
+          marginRight: "10px",
           float: "right",
         }}
       >
