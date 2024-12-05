@@ -60,10 +60,10 @@ db.connect((err) => {
               console.error("Failed to update employee record:", err);
             } else if (results.affectedRows === 0) {
               console.log(
-                "No employee found with the given name and position."
+                "No employee found with the given name and position.\n"
               );
             } else {
-              console.log("Employee record updated successfully!");
+              console.log("Employee record updated successfully!\n");
             }
           }
         );
@@ -71,6 +71,14 @@ db.connect((err) => {
         console.log("Invalid Input");
       }
     }
+
+    // Second Prompt
+
+    // Third Prompt
+
+    // Fourth Prompt
+
+    // Fifth Prompt
   }
   // Close the database connection
   db.end();
