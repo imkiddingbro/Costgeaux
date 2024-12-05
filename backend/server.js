@@ -112,6 +112,7 @@ db.connect((err) => {
     const checkQuery = "SELECT * FROM Product WHERE p_name = ?";
     const updateQuery = "UPDATE Product SET p_Quantity = p_Quantity + ? WHERE p_name = ?";
     const addQuery = "INSERT INTO Product (p_name, price, p_Quantity, p_section) VALUES (?, ?, ?, ?)";
+    const selectQuery = "SELECT * FROM Product WHERE p_name = ?"
     try {
 
       const [rows] = await new Promise((resolve, reject) =>
@@ -130,6 +131,16 @@ db.connect((err) => {
           console.log("No product found with the given name.\n");
         } else {
           console.log("Product stock record updated successfully!\n");
+          const [updatedRows] = await new Promise((resolve, reject) =>
+            db.query(selectQuery, [productName], (err, res) =>
+                err ? reject(err) : resolve(res)
+            )
+          );
+          console.log("Updated Product Stock:\n");
+          console.log(`Name: ${updatedRows.p_name}`);
+          console.log(`Quantity: ${updatedRows.p_Quantity}`);
+          console.log(`Price: $${updatedRows.price}`);
+          console.log(`Section: ${updatedRows.p_section}`);
         }
       } else {
         console.log("No inventory avalible for " + productName + ". Please enter a price and section: ");
@@ -146,6 +157,16 @@ db.connect((err) => {
           console.log("Product could not be updated.\n");
         } else {
           console.log("New product added to inventory!\n");
+          const [newRows] = await new Promise((resolve, reject) =>
+            db.query(selectQuery, [productName], (err, res) =>
+                err ? reject(err) : resolve(res)
+            )
+          );
+          console.log("New Product in Stock:\n");
+          console.log(`Name: ${newRows.p_name}`);
+          console.log(`Quantity: ${newRows.p_Quantity}`);
+          console.log(`Price: $${newRows.price}`);
+          console.log(`Section: ${newRows.p_section}`);
         }
       }
         
@@ -172,7 +193,7 @@ db.connect((err) => {
       if (results.affectedRows === 0) {
         console.log("No employee found with the given name and position.\n");
       } else {
-        console.log("Employee record updated successfully!\n");
+        console.log("Employee record removed successfully!\n");
       }
     } catch (error) {
       console.error("Failed to update employee record:", error);
@@ -261,10 +282,10 @@ db.connect((err) => {
   // Run the scripts
   async function main() {
     
-    //await updateEmployee();
-    //await addCustomer();
-    //await updateProductStock();
-    //await deleteEmployee();
+    await updateEmployee();
+    await addCustomer();
+    await updateProductStock();
+    await deleteEmployee();
     await updateCart();
     db.end(() => console.log("Database connection closed."));
   }
