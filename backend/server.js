@@ -33,33 +33,37 @@ db.connect((err) => {
 
     // Prompt user for input
     while (!question1a && !question1b && !question1c && !question1d) {
-      question1a = prompt("Input the employees name.\n");
+      question1a = prompt("Input the employees name. \tEX: 'Stacy'\n");
       if (question1a) {
-        question1b = prompt("Input the employees new city.\n");
+        question1b = prompt(
+          "Input the employees new city. \tEX: 'New Orleans'\n"
+        );
       } else {
         console.log("Invalid Input.");
       }
       if (question1b) {
-        question1c = prompt("Input the employees state.\n");
+        question1c = prompt("Input the employees state. \tEX: 'TX'\n");
       } else {
         console.log("Invalid Input.");
       }
       if (question1c) {
-        question1d = prompt("Input the employees position.\n");
+        question1d = prompt("Input the employees position. \tEX: 'cashier'\n");
       } else {
         console.log("Invalid Input.");
       }
       if (question1d) {
         const updateQuery1 =
-          "UPDATE Employee SET e_City = ?, e_State = ?, e_Position = ? WHERE e_name = ?";
+          "UPDATE Employee SET e_City = ?, e_State = ? WHERE e_name = ? AND e_Position = ?";
         db.query(
           updateQuery1,
-          [question1b, question1c, question1d, question1a],
+          [question1b, question1c, question1a, question1d],
           (err, results) => {
             if (err) {
               console.error("Failed to update employee record:", err);
             } else if (results.affectedRows === 0) {
-              console.log("No employee found with the given name.");
+              console.log(
+                "No employee found with the given name and position."
+              );
             } else {
               console.log("Employee record updated successfully!");
             }
@@ -73,4 +77,6 @@ db.connect((err) => {
       }
     }
   }
+  // Close the database connection
+  db.end();
 });
