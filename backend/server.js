@@ -58,10 +58,12 @@ db.connect((err) => {
     const city = prompt("Enter your city (EX: 'Dallas'): ");
     const state = prompt("Enter your state (EX: 'TX'): ");
 
-    const query = "INSERT INTO Customer (c_name, c_City, c_State) VALUES (?, ?, ?)";
+    const insertQuery = "INSERT INTO Customer (c_name, c_City, c_State) VALUES (?, ?, ?)";
+    const selectQuery = "SELECT * FROM Customer WHERE c_id = ?";
+
     try {
       const results = await new Promise((resolve, reject) =>
-        db.query(query, [customerName, city, state], (err, res) =>
+        db.query(insertQuery, [customerName, city, state], (err, res) =>
           err ? reject(err) : resolve(res)
         )
       );
@@ -69,6 +71,17 @@ db.connect((err) => {
         console.log("Failed to update customer record.\n");
       } else {
         console.log("Customer record updated successfully!\n");
+        // Fetch the customers results 
+        const [newCustomer] = await new Promise((resolve, reject) =>
+          db.query(selectQuery, [results.insertId], (err, res) =>
+            err ? reject(err) : resolve(res)
+          )
+        );
+        console.log("New Customer added:\n");
+        console.log(`ID: ${newCustomer.c_id}`);
+        console.log(`Name: ${newCustomer.c_name}`);
+        console.log(`City: ${newCustomer.c_City}`);
+        console.log(`State: ${newCustomer.c_State}\n`);
       }
     } catch (error) {
       console.error("Failed to update customer record:", error);
@@ -151,7 +164,6 @@ db.connect((err) => {
       console.error("Failed to update employee record:", error);
     }
   }
-
   
   async function updateCart() {
     console.log("You are a customer adding products into your cart.");
@@ -218,11 +230,11 @@ db.connect((err) => {
   // Run the scripts
   async function main() {
     
-    await updateEmployee();
+    //await updateEmployee();
     await addCustomer();
-    await updateProductStock();
-    await deleteEmployee();
-    await updateCart();
+   // await updateProductStock();
+    //await deleteEmployee();
+    //await updateCart();
     db.end(() => console.log("Database connection closed."));
   }
 
