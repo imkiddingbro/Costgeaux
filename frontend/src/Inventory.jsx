@@ -44,7 +44,7 @@ const Inventory = () => {
             required
           />
         </label>
-        <label style={{ paddingLeft: "420px" }}>
+        <label style={{ paddingLeft: "425px" }}>
           Product:
           <input
             type="text"
@@ -64,7 +64,7 @@ const Inventory = () => {
             required
           />
         </label>
-        <label style={{ paddingLeft: "420px" }}>
+        <label style={{ paddingLeft: "425px" }}>
           Quantity:
           <input
             type="number"
@@ -74,6 +74,16 @@ const Inventory = () => {
           />
         </label>
       </div>
+      <button
+        type="submit"
+        style={{
+          display: "flex",
+          marginTop: "20px",
+          float: "right",
+        }}
+      >
+        Add Inventory
+      </button>
       <div>
         <label style={{ display: "flex" }}>Price:</label>
         <input
@@ -84,7 +94,7 @@ const Inventory = () => {
           required
         />
       </div>
-      <button type="submit" style={{ marginTop: "20px", display: "grid" }}>
+      <button type="submit" style={{ marginTop: "20px", display: "flex" }}>
         Add Product
       </button>
     </form>
