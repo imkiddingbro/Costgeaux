@@ -92,8 +92,8 @@ db.connect((err) => {
           err ? reject(err) : resolve(res)
         )
       );
-
-      if(rows.length > 0) {
+      
+      if(rows) {
         const results1 = await new Promise((resolve, reject) =>
           db.query(updateQuery, [quantity, productName], (err, res) =>
             err ? reject(err) : resolve(res)
