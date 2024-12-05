@@ -82,7 +82,7 @@ db.connect((err) => {
     const quantity = prompt("Input the product amount (EX: '25'): ");
 
     const query =
-      "UPDATE Product SET p_Quantity = p_Quantity + ?, WHERE p_name = ?";
+      "UPDATE Product SET p_Quantity = p_Quantity + ? WHERE p_name = ?";
     try {
       const results = await new Promise((resolve, reject) =>
         db.query(query, [quantity, productName], (err, res) =>
