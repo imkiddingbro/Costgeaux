@@ -29,8 +29,5 @@ console.log(
 );
 
 var question1a = prompt("Input the employees name.\n");
-console.log(question1a);
 var question1b = prompt("Input the employees new city.\n");
-console.log(question1b);
 var question1c = prompt("Input the employees position.\n");
-console.log(question1c);
