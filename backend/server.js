@@ -116,6 +116,44 @@ db.connect((err) => {
     //test comment
 
     // Third Prompt
+    console.log(
+      "You are an employee inputting products into your inventory"
+    );
+
+    let question3a;
+    let question3b;
+
+    // Prompt user for input
+    while (!question3a && !question3b && !question3c && !question3d) {
+      question3a = prompt("Input the product name (EX: 'lamb'): ");
+      if (question3a) {
+        question3b = prompt("Input the product amount (EX: '25'): ");
+      } else {
+        console.log("Invalid Input.");
+      }
+      if (question3b) {
+        const updateQuery3 =
+          "UPDATE Product SET p_name = ?, p_Quantity = ?";
+        db.query(
+          updateQuery3,
+          [question3a, question3b],
+          (err, results) => {
+            if (err) {
+              console.error("Failed to update product stock record:", err);
+            } else if (results.affectedRows === 0) {
+              console.log(
+                "No product found with the given name.\n"
+              );
+            } else {
+              console.log("Product stock record updated successfully!\n");
+            }
+          }
+        );
+      } else {
+        console.log("Invalid Input");
+      }
+    }
+
 
     // Fourth Prompt
 
