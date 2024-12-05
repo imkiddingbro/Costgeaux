@@ -75,63 +75,57 @@ db.connect((err) => {
     }
   }
 
-  aasync function updateProductStock() {
+  async function updateProductStock() {
     console.log("You are an employee inputting products into your inventory.");
 
     const productName = prompt("Input the product name (EX: 'lamb'): ");
+    const quantity = prompt("Input the product amount (EX: '25'): ");
     
+
     const checkQuery = "SELECT * FROM Product WHERE p_name = ?";
     const updateQuery = "UPDATE Product SET p_Quantity = p_Quantity + ? WHERE p_name = ?";
     const addQuery = "INSERT INTO Product (p_name, price, p_Quantity, p_section) VALUES (?, ?, ?, ?)";
-
     try {
-      // Check if the product already exists in the database
+
       const [rows] = await new Promise((resolve, reject) =>
         db.query(checkQuery, [productName], (err, res) =>
           err ? reject(err) : resolve(res)
         )
       );
 
-      if (rows && Array.isArray(rows) && rows.length > 0) {
-        // Product exists, prompt only for quantity
-        const quantity = prompt("Input the product amount (EX: '25'): ");
-
-        // Update product quantity in database
+      if(rows.length > 0) {
         const results1 = await new Promise((resolve, reject) =>
           db.query(updateQuery, [quantity, productName], (err, res) =>
             err ? reject(err) : resolve(res)
           )
         );
-
         if (results1.affectedRows === 0) {
           console.log("No product found with the given name.\n");
         } else {
           console.log("Product stock record updated successfully!\n");
         }
       } else {
-        // Product does not exist, prompt for price and section along with name and quantity
-        const quantity = prompt("Input the product amount (EX: '25'): ");
+        console.log("No inventory avalible for " + productName + ". Please enter a price and section: ");
+
         const price = prompt("Input the product price (EX: 2.00): ");
         const section = prompt("Input the product section (EX: 'Produce Section'): ");
 
-        // Insert new product into the database
         const results2 = await new Promise((resolve, reject) =>
           db.query(addQuery, [productName, price, quantity, section], (err, res) =>
             err ? reject(err) : resolve(res)
           )
         );
-
         if (results2.affectedRows === 0) {
-          console.log("Product could not be added.\n");
+          console.log("Product could not be updated.\n");
         } else {
           console.log("New product added to inventory!\n");
         }
       }
+        
     } catch (error) {
       console.error("Failed to update product stock record:", error);
     }
-}
-
+  }
 
   async function deleteEmployee() {
     console.log("You are a manager. One of your employees quit. Remove them from the database.");
