@@ -74,7 +74,7 @@ CREATE TABLE OrderStock(
     total_price float,
     foreign key (employee_id) references Employee(e_id)
 );
-<<<<<<< HEAD
+
 
 INSERT INTO product VALUES ('1', 'apple', '2.00', '4');
 INSERT INTO product VALUES ('2', 'orange', '1.00', '10');
@@ -138,19 +138,3 @@ INSERT INTO orderstock VALUES ('005', '1005', '20', '800.00');
 
 
 
-
-
-=======
-INSERT INTO product
-VALUES ('1', 'apple', '2.00', '4');
-INSERT INTO product
-VALUES ('2', 'orange', '1.00', '10');
-INSERT INTO product
-VALUES ('3', 'banana', '4.00', '20');
-INSERT INTO product
-VALUES ('4', 'grape', '7.00', '5');
-INSERT INTO product
-VALUES ('5', 'blueberry', '2.50', '2');
-INSERT INTO product
-VALUES ('6', 'strawberry', '2.99', '3');
->>>>>>> 5ac1f755d952d028c3e0252251dd821c99ff3796
