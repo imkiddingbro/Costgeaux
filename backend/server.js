@@ -19,146 +19,88 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) {
     console.error("Database connection failed:", err);
-  } else {
-    console.log("Connected to MySQL database\n");
-
-    // Begin First Prompt
-
-    console.log(
-      "You are a manager looking to update one of your employees states because they recently moved."
-    );
-
-    let question1a;
-    let question1b;
-    let question1c;
-    let question1d;
-
-    // Prompt user for input
-    while (!question1a && !question1b && !question1c && !question1d) {
-      question1a = prompt("Input the employees name (EX: 'Stacy'): ");
-      if (question1a) {
-        question1b = prompt("Input the employees new city (EX: 'Dallas'): ");
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question1b) {
-        question1c = prompt("Input the employees state (EX: 'TX'): ");
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question1c) {
-        question1d = prompt("Input the employees position (EX: 'employee'): ");
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question1d) {
-        const updateQuery1 =
-          "UPDATE Employee SET e_City = ?, e_State = ? WHERE e_name = ? AND e_Position = ?";
-        db.query(updateQuery1, [question1b, question1c, question1a, question1d], (err, results) => {
-            if (err) {
-              console.error("Failed to update employee record:", err);
-            } else if (results.affectedRows === 0) {
-              console.log(
-                "No employee found with the given name and position.\n"
-              );
-            } else {
-              console.log("Employee record updated successfully!\n");
-            }
-          }
-        );
-      } else {
-        console.log("Invalid Input");
-      }
-    }
-
-    // Second Prompt
-    console.log(
-      "You are a new Customer. Input your information."
-    );
-
-    let question2a;
-    let question2b;
-    let question2c;
-
-    // Prompt user for input
-    while (!question2a && !question2b && !question2c) {
-      question2a = prompt("Enter your name (EX: 'Stacy'): ");
-      if (question2a) {
-        question2b = prompt("Enter your city (EX: 'Dallas'): ");
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question2b) {
-        question2c = prompt("Enter your state (EX: 'TX'): ");
-      } else {
-        console.log("Invalid Input.");
-      }
-      
-      if (question2c) {
-        const updateQuery2 =
-          "INSERT INTO customer (c_name, c_City, c_State) VALUES (?, ?, ?)";
-        db.query(updateQuery2, [question2a, question2b, question2c], (err, results) => {
-            if (err) {
-              console.error("Failed to update employee record:", err);
-            } else if (results.affectedRows === 0) {
-              console.log(
-                "Could not update Query.\n"
-              );
-            } else {
-              console.log("Customer record updated successfully!\n");
-            }
-          }
-        );
-      } else {
-        console.log("Invalid Input");
-      }
-    }
-    //test comment
-
-    // Third Prompt
-    console.log(
-      "You are an employee inputting products into your inventory"
-    );
-
-    let question3a;
-    let question3b;
-
-    // Prompt user for input
-    while (!question3a && !question3b && !question3c && !question3d) {
-      question3a = prompt("Input the product name (EX: 'lamb'): ");
-      if (question3a) {
-        question3b = prompt("Input the product amount (EX: '25'): ");
-      } else {
-        console.log("Invalid Input.");
-      }
-      if (question3b) {
-        const updateQuery3 =
-          "UPDATE Product SET p_name = ?, p_Quantity = ?";
-        db.query(
-          updateQuery3,
-          [question3a, question3b],
-          (err, results) => {
-            if (err) {
-              console.error("Failed to update product stock record:", err);
-            } else if (results.affectedRows === 0) {
-              console.log(
-                "No product found with the given name.\n"
-              );
-            } else {
-              console.log("Product stock record updated successfully!\n");
-            }
-          }
-        );
-      } else {
-        console.log("Invalid Input");
-      }
-    }
-
-
-    // Fourth Prompt
-
-    // Fifth Prompt
+    return;
   }
-  // Close the database connection
-  db.end();
+  console.log("Connected to MySQL database\n");
+
+  async function updateEmployee() {
+    console.log(
+      "You are a manager looking to update one of your employees' states because they recently moved."
+    );
+
+    const employeeName = prompt("Input the employee's name (EX: 'Stacy'): ");
+    const newCity = prompt("Input the employee's new city (EX: 'Dallas'): ");
+    const newState = prompt("Input the employee's state (EX: 'TX'): ");
+    const position = prompt("Input the employee's position (EX: 'employee'): ");
+
+    const query =
+      "UPDATE Employee SET e_City = ?, e_State = ? WHERE e_name = ? AND e_Position = ?";
+    try {
+      const results = await new Promise((resolve, reject) =>
+        db.query(query, [newCity, newState, employeeName, position], (err, res) =>
+          err ? reject(err) : resolve(res)
+        )
+      );
+      if (results.affectedRows === 0) {
+        console.log("No employee found with the given name and position.\n");
+      } else {
+        console.log("Employee record updated successfully!\n");
+      }
+    } catch (error) {
+      console.error("Failed to update employee record:", error);
+    }
+  }
+
+  async function addCustomer() {
+    console.log("You are a new customer. Input your information.");
+
+    const customerName = prompt("Enter your name (EX: 'Stacy'): ");
+    const city = prompt("Enter your city (EX: 'Dallas'): ");
+    const state = prompt("Enter your state (EX: 'TX'): ");
+
+    const query = "INSERT INTO Customer (c_name, c_City, c_State) VALUES (?, ?, ?)";
+    try {
+      const results = await new Promise((resolve, reject) =>
+        db.query(query, [customerName, city, state], (err, res) =>
+          err ? reject(err) : resolve(res)
+        )
+      );
+      console.log("Customer record updated successfully!\n");
+    } catch (error) {
+      console.error("Failed to update customer record:", error);
+    }
+  }
+
+  async function updateProductStock() {
+    console.log("You are an employee inputting products into your inventory.");
+
+    const productName = prompt("Input the product name (EX: 'lamb'): ");
+    const quantity = prompt("Input the product amount (EX: '25'): ");
+
+    const query =
+      "UPDATE Product SET p_name = ?, p_Quantity = ? WHERE p_name = ?";
+    try {
+      const results = await new Promise((resolve, reject) =>
+        db.query(query, [productName, quantity, productName], (err, res) =>
+          err ? reject(err) : resolve(res)
+        )
+      );
+      if (results.affectedRows === 0) {
+        console.log("No product found with the given name.\n");
+      } else {
+        console.log("Product stock record updated successfully!\n");
+      }
+    } catch (error) {
+      console.error("Failed to update product stock record:", error);
+    }
+  }
+
+  async function main() {
+    await updateEmployee();
+    await addCustomer();
+    await updateProductStock();
+    db.end(() => console.log("Database connection closed."));
+  }
+
+  main();
 });
