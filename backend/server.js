@@ -65,9 +65,6 @@ db.connect((err) => {
             } else {
               console.log("Employee record updated successfully!");
             }
-
-            // Close the database connection
-            db.end();
           }
         );
       } else {
