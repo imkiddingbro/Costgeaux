@@ -104,22 +104,22 @@ INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'strawberry'
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'peach', '3.99', '40', 'Produce Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'mango', '3.49', '29', 'Produce Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'pineapple', '5.99', '30', 'Produce Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'lamb', '5.00', '39', 'Meat Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'chicken breast', '1.99', '69', 'Meat Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'steak', '3.99', '49', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'lamb', '15.00', '39', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'chicken breast', '8.99', '69', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'steak', '15.99', '49', 'Meat Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'drumsticks', '7.00', '49', 'Meat Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'new york strip', '3.50', '19', 'Meat Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'sirloin', '2.99', '27', 'Meat Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'ground beef', '1.99', '46', 'Meat Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'wagyu', '7.00', '15', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'new york strip', '30.50', '19', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'sirloin', '19.99', '27', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'ground beef', '5.99', '46', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'wagyu', '100.00', '15', 'Meat Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'porkchops', '5.99', '40', 'Meat Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'bacon', '4.99', '25', 'Meat Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ( 'bacon', '8.99', '25', 'Meat Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('arizona', '1.00', '35', 'Meat Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('gatorade', '6.99', '75', 'Drink Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('prime', '1.99', '35', 'Drink Section');
 INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('bodyarmor', '3.99', '45', 'Drink Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('coke', '15.99', '50', 'Drink Section');
-INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('sprite', '14.99', '50', 'Drink Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('coke', '1.99', '50', 'Drink Section');
+INSERT INTO product (p_name, price, p_Quantity, p_section) VALUES ('sprite', '1.99', '50', 'Drink Section');
 
 INSERT INTO employee (e_name, e_City, e_State, e_Position) VALUES ('John', 'Baton Rouge', 'LA', 'manager');
 INSERT INTO employee (e_name, e_City, e_State, e_Position) VALUES ('Anthony', 'Dallas', 'TX', 'employee');
@@ -193,6 +193,11 @@ WHERE p_name = 'steak';
 SET SQL_SAFE_UPDATES = 1;
 
 -- Step 3: Display the OrderStock table to show the purchase
-SELECT * FROM OrderStock;
+-- SELECT * FROM OrderStock;
+-- SELECT * FROM Product;
+-- SELECT * FROM Customer;
+-- SELECT * FROM Manager;
+-- SELECT * FROM Supplier;
+-- SELECT * FROM Cart;
 
 

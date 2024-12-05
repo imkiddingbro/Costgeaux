@@ -28,9 +28,9 @@ db.connect((err) => {
       "You are a manager looking to update one of your employees' states because they recently moved."
     );
 
-    const employeeName = prompt("Input the employee's name (EX: 'Stacy'): ");
-    const newCity = prompt("Input the employee's new city (EX: 'Dallas'): ");
-    const newState = prompt("Input the employee's potenial new state (EX: 'TX'): ");
+    const employeeName = prompt("Input the employee's name (EX: 'Anthony'): ");
+    const newCity = prompt("Input the employee's new city (EX: 'Hammond'): ");
+    const newState = prompt("Input the employee's potenial new state (EX: 'LA'): ");
     const position = prompt("Input the employee's position (EX: 'employee'): ");
 
     const updateQuery =
@@ -68,9 +68,9 @@ db.connect((err) => {
   async function addCustomer() {
     console.log("You are a new customer. Input your information.");
 
-    const customerName = prompt("Enter your name (EX: 'Stacy'): ");
-    const city = prompt("Enter your city (EX: 'Dallas'): ");
-    const state = prompt("Enter your state (EX: 'TX'): ");
+    const customerName = prompt("Enter your name (EX: 'Yash'): ");
+    const city = prompt("Enter your city (EX: 'Orlando'): ");
+    const state = prompt("Enter your state (EX: 'FL'): ");
 
     const insertQuery = "INSERT INTO Customer (c_name, c_City, c_State) VALUES (?, ?, ?)";
     const selectQuery = "SELECT * FROM Customer WHERE c_id = ?";
@@ -105,8 +105,8 @@ db.connect((err) => {
   async function updateProductStock() {
     console.log("You are an employee inputting products into your inventory.");
 
-    const productName = prompt("Input the product name (EX: 'lamb'): ");
-    const quantity = prompt("Input the product amount (EX: '25'): ");
+    const productName = prompt("Input the product name (EX: 'pear'): ");
+    const quantity = prompt("Input the product amount (EX: '12'): ");
     
 
     const checkQuery = "SELECT * FROM Product WHERE p_name = ?";
@@ -145,7 +145,7 @@ db.connect((err) => {
       } else {
         console.log("No inventory avalible for " + productName + ". Please enter a price and section: ");
 
-        const price = prompt("Input the product price (EX: 2.00): ");
+        const price = prompt("Input the product price (EX: 1.05): ");
         const section = prompt("Input the product section (EX: 'Produce Section'): ");
 
         const results2 = await new Promise((resolve, reject) =>
@@ -178,8 +178,8 @@ db.connect((err) => {
   async function deleteEmployee() {
     console.log("You are a manager. One of your employees quit. Remove them from the database.");
 
-    const employeeName = prompt("Enter your employees name (EX: 'Stacy'): ");
-    const city = prompt("Enter your city (EX: 'Dallas'): ");
+    const employeeName = prompt("Enter your employees name (EX: 'Jun'): ");
+    const city = prompt("Enter your city (EX: 'Houston'): ");
     const state = prompt("Enter your state (EX: 'TX'): ");
     const employeePosition = prompt("Enter your employees position (EX: 'janitor'): ");
 
@@ -203,9 +203,9 @@ db.connect((err) => {
   async function updateCart() {
     console.log("You are a customer adding products into your cart.");
 
-    const customerName = prompt("Enter your name (EX: 'Stacy'): ");
-    const productName = prompt("Input the product name (EX: 'lamb'): ");
-    const quantity = prompt("Input the product amount (EX: '25'): ");
+    const customerName = prompt("Enter your name (EX: 'Ryan'): ");
+    const productName = prompt("Input the product name (EX: 'steak'): ");
+    const quantity = prompt("Input the product amount (EX: '3'): ");
     
     const checkQuery = "SELECT * FROM Product WHERE p_name = ?";
     const getCustomerQuery = "SELECT c_id FROM Customer WHERE c_name =?";
