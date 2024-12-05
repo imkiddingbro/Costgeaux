@@ -198,3 +198,4 @@ SET SQL_SAFE_UPDATES = 1;
 -- Step 3: Display the Cart table
 SELECT *
 FROM Cart;
+--end
