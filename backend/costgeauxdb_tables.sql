@@ -89,7 +89,7 @@ CREATE TABLE OrderStock(
     supplier_id int NOT NULL,
     product_id int NOT NULL,
     item_count int NOT NULL CHECK (item_count > 0),
-    total_price float NOT NULL CHECK (total_price > 0),
+    total_price decimal(5,2) NOT NULL CHECK (total_price > 0),
     foreign key (employee_id) references Employee(e_id),
 	foreign key (supplier_id) references Supplier(s_id),
     foreign key (product_id) references Product(p_id)

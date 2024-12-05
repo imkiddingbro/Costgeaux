@@ -161,7 +161,12 @@ db.connect((err) => {
     const quantity = prompt("Input the product amount (EX: '25'): ");
     
     const checkQuery = "SELECT * FROM Product WHERE p_name = ?";
-    const purchaseQuery = "INSERT INTO Cart (customer_id, product_id, item_count, total_price) VALUES (?, ?, ?) SELECT c.c_id, p.p_id, ? AS item_count, ? * p.price AS total_price FROM Customer c, Product p WHERE c.c_name = ? AND p.p_name = ? AND p.p_Quantity = ?";
+    const getCustomerQuery = "SELECT c_id FROM Customer WHERE c_name =?";
+    const purchaseQuery =`
+                INSERT INTO Cart (customer_id, product_id, item_count, total_price)
+                SELECT c.c_id, p.p_id, ?, ? * p.price AS total_price
+                FROM Customer c, Product p
+                WHERE c.c_name = ? AND p.p_name = ? AND p.p_Quantity >= ?`;
     const updateQuery = "UPDATE Product SET p_Quantity = p_Quantity - ? WHERE p_name = ?";
     try {
 
@@ -171,6 +176,17 @@ db.connect((err) => {
         )
       );
       
+      const [customerRows] = await new Promise((resolve, reject) =>
+        db.query(getCustomerQuery, [customerName], (err, res) =>
+            err ? reject(err) : resolve(res)
+        )
+      );
+      
+      if (customerRows.length === 0){
+        console.log("No Customer found with the given name.\n");
+        updateCart();
+      }
+
       if(rows) {
         const results1 = await new Promise((resolve, reject) =>
           db.query(updateQuery, [quantity, productName], (err, res) =>
@@ -181,7 +197,7 @@ db.connect((err) => {
           console.log("No product found with the given name.\n");
         } 
         const results2 = await new Promise((resolve, reject) =>
-          db.query(purchaseQuery, [customerName, productName, quantity], (err, res) =>
+          db.query(purchaseQuery, [quantity, quantity, customerName, productName, quantity], (err, res) =>
             err ? reject(err) : resolve(res)
           )
         );
@@ -190,7 +206,6 @@ db.connect((err) => {
         } else {
           console.log("Your Cart has been updated with the product(s)!\n");
         }
-
       } else {
         console.log("No inventory avalible for " + productName + ".");
       }
