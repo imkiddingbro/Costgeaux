@@ -54,7 +54,7 @@ db.connect((err) => {
       );
       console.log("Updated employee record:\n");
       // need to fix this - result is 'undefined'
-      console.log(`ID: ${updateEmployee.e_id}`);
+      console.log(`ID: ${updatedEmployee.e_id}`);
       console.log(`Name: ${updatedEmployee.e_name}`);
       console.log(`Position: ${updatedEmployee.e_Position}`);
       console.log(`City: ${updatedEmployee.e_City}`);
