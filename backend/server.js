@@ -53,6 +53,8 @@ db.connect((err) => {
           )
       );
       console.log("Updated employee record:\n");
+      // need to fix this - result is 'undefined'
+      console.log(`ID: ${updateEmployee.e_id}`);
       console.log(`Name: ${updatedEmployee.e_name}`);
       console.log(`Position: ${updatedEmployee.e_Position}`);
       console.log(`City: ${updatedEmployee.e_City}`);
@@ -192,9 +194,16 @@ db.connect((err) => {
                 FROM Customer c, Product p
                 WHERE c.c_name = ? AND p.p_name = ? AND p.p_Quantity >= ?`;
     const updateQuery = "UPDATE Product SET p_Quantity = p_Quantity - ? WHERE p_name = ?";
+    const cartQuery = `
+                SELECT c.c_name, p.p_name, ca.item_count, ca.total_price
+                FROM Cart ca
+                JOIN Customer c ON ca.customer_id = c.c_id
+                JOIN Product p ON ca.product_id = p.p_id
+                WHERE c.c_name = ?`;
+
     try {
 
-      const [rows] = await new Promise((resolve, reject) =>
+      const [productRows] = await new Promise((resolve, reject) =>
         db.query(checkQuery, [productName], (err, res) =>
           err ? reject(err) : resolve(res)
         )
@@ -208,10 +217,10 @@ db.connect((err) => {
       
       if (customerRows.length === 0){
         console.log("No Customer found with the given name.\n");
-        updateCart();
+        return updateCart();
       }
 
-      if(rows) {
+      if(productRows) {
         const results1 = await new Promise((resolve, reject) =>
           db.query(updateQuery, [quantity, productName], (err, res) =>
             err ? reject(err) : resolve(res)
@@ -229,6 +238,16 @@ db.connect((err) => {
           console.log("Product could not be added.\n");
         } else {
           console.log("Your Cart has been updated with the product(s)!\n");
+          const [cartRows] = await new Promise((resolve, reject) =>
+            db.query(cartQuery, [customerName], (err, res) =>
+                err ? reject(err) : resolve(res)
+            )
+          );
+          // Output
+          console.log("Here is your updated cart:\n");
+          console.log(`Product: ${cartRows.p_name}`);
+          console.log(`Quantity: ${cartRows.item_count}`);
+          console.log(`Total Price: $${cartRows.total_price}`);                          
         }
       } else {
         console.log("No inventory avalible for " + productName + ".");
@@ -242,11 +261,11 @@ db.connect((err) => {
   // Run the scripts
   async function main() {
     
-    await updateEmployee();
+    //await updateEmployee();
     //await addCustomer();
-   // await updateProductStock();
+    //await updateProductStock();
     //await deleteEmployee();
-    //await updateCart();
+    await updateCart();
     db.end(() => console.log("Database connection closed."));
   }
 
