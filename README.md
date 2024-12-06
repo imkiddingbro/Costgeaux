@@ -1,8 +1,9 @@
 # Costgeaux
 
 ## Introduction 
+The enterprise is named Costgeaux. Like the name, it functions similarly to the well-known warehouse store Costco. The Costgeaux database stores the data of its employees, customers, products, and more. It aims to find a solution to a minimized yet realistic problem that not just a grocery store, but any store can encounter. This database is needed to exemplify that realistic problem.
 
- The Costgeaux project uses both MySQL and Javascript to run the backend components for a grocery store.
+The Costgeaux project uses both MySQL and Javascript to run the backend components for a grocery store.
 
 ## Prerequisites
 
